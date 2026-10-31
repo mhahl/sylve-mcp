@@ -1,0 +1,7 @@
+include LICENSE
+include README.md
+include PLAN.md
+include docs/swagger.json
+recursive-include docs/man *
+recursive-include packaging *
+recursive-include examples *

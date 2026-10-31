@@ -1,0 +1,112 @@
+.TH SYLVE-MCP 1 "@VERSION@" "Sylve MCP"
+.SH NAME
+sylve-mcp \- Model Context Protocol server for Sylve FreeBSD clusters
+.SH SYNOPSIS
+.B sylve-mcp
+[--config FILE] [--context NAME] [-n NODE] [-k] [--timeout SECONDS]
+[--read-only] [--expose-tags TAG1,TAG2] [--expose-all] [-V] [-h]
+.SH DESCRIPTION
+.B sylve-mcp
+is a Model Context Protocol (MCP) server over stdio that exposes the Sylve
+Bhyve/Jail/ZFS cluster API to agents and models. It reads the same
+configuration and bearer tokens as
+.B sylve-cli
+(see
+.BR sylve-config (5)):
+\f[BI]~/.config/sylve/config.yaml\fR plus the
+.B SYLVE_*
+environment variables.
+.PP
+The server registers curated cluster-aware tools (VMs, jails, ZFS, network,
+backups, replication, tasks) plus three universal Swagger tools
+.RB ( sylve_api_search ,
+.BR sylve_api_schema ,
+.BR sylve_api_call )
+that together cover every operation in the bundled
+.B docs/swagger.json
+(336 paths, 441 operations).
+.SH OPTIONS
+.TP
+.B \-\-config FILE
+Path to the configuration file (default:
+.BR ~/.config/sylve/config.yaml ).
+.TP
+.B \-\-context NAME
+Named login context to use by default.
+.TP
+.BI \-n, \-\-node NODE
+Default target cluster node hostname or UUID.
+.TP
+.BI \-k, \-\-insecure
+Disable TLS certificate verification.
+.TP
+.BI \-\-timeout SECONDS
+HTTP request timeout (default: 30.0).
+.TP
+.B \-\-read-only
+Refuse all non-GET API requests.
+.TP
+.BI \-\-expose-tags TAGS
+Dynamically register one MCP tool per Swagger operation in these comma-separated tags (e.g. "VM,Jail").
+.TP
+.B \-\-expose-all
+Dynamically register one MCP tool for every Swagger operation.
+.TP
+.BI \-V, \-\-version
+Print the version and exit.
+.TP
+.BI \-h, \-\-help
+Print usage information and exit.
+.SH ENVIRONMENT
+.TP
+.B SYLVE_CONFIG
+Override configuration file path.
+.TP
+.B SYLVE_CONTEXT
+Override active context name.
+.TP
+.B SYLVE_SERVER
+Override server URL without a saved context.
+.TP
+.B SYLVE_TOKEN
+Override bearer token without a saved context.
+.TP
+.B SYLVE_NODE
+Default target cluster node.
+.TP
+.B SYLVE_INSECURE
+Set to 1, true, or yes to skip TLS verification.
+.TP
+.B SYLVE_READ_ONLY
+Set to 1, true, or yes to enforce read-only mode.
+.TP
+.B XDG_CONFIG_HOME
+Base directory for the default configuration file.
+.SH FILES
+.TP
+.I ~/.config/sylve/config.yaml
+Configuration file containing saved login contexts and bearer tokens
+(mode 0600). Create it with \fBsylve login\fR.
+.SH EXAMPLES
+.sp
+.RS
+.nf
+sylve login https://sylve.example.test
+sylve-mcp
+sylve-mcp --read-only --context prod
+sylve-mcp --expose-tags VM,Jail
+.fi
+.RE
+.sp
+MCP client configuration (OpenCode, Claude Desktop, Cursor) usually invokes
+.B sylve-mcp
+with:
+.sp
+.RS
+.nf
+{ "command": "sylve-mcp", "args": [] }
+.fi
+.RE
+.SH SEE ALSO
+.BR sylve (1),
+.BR sylve-config (5)

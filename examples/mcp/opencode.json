@@ -1,0 +1,12 @@
+{
+  "$schema": "https://opencode.ai/config/mcp.schema.json",
+  "mcp": {
+    "sylve": {
+      "type": "stdio",
+      "command": [
+        "sylve-mcp"
+      ],
+      "enabled": true
+    }
+  }
+}

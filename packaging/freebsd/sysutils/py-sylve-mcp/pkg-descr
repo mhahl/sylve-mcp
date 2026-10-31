@@ -1,0 +1,5 @@
+Model Context Protocol (MCP) server for the Sylve FreeBSD Bhyve/Jail/ZFS
+hypervisor. Exposes the entire Sylve REST API (336 paths, 441 operations) to
+agents and models via MCP over stdio, reusing the ~/.config/sylve/config.yaml
+contexts and SYLVE_* environment variables shared with sylve-cli and the
+sylve.cloud Ansible collection.

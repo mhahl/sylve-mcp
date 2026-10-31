@@ -1,0 +1,38 @@
+# Example CLI configuration with saved login contexts.
+#
+# Prefer `sylve login` to create this file: it writes the token and sets mode
+# 0600. If you copy this example, replace the tokens and run:
+#
+#   chmod 600 config.yaml
+#   sylve --config config.yaml node list
+#
+# For CI, skip the file entirely:
+#
+#   export SYLVE_SERVER=https://sylve.example.test
+#   export SYLVE_TOKEN=...
+current_context: prod
+
+contexts:
+  prod:
+    server: https://sylve.example.test
+    username: admin
+    auth_type: sylve
+    node_id: node-1
+    hostname: node1.example.test
+    token: REPLACE_WITH_TOKEN_FROM_SYLVE_LOGIN
+    expires_at: '2026-11-01T00:00:00Z'
+    verify_ssl: true
+    ca_cert: null
+    default_node: node1.example.test
+
+  lab:
+    server: https://sylve-lab.example.test
+    username: admin
+    auth_type: pam
+    node_id: node-2
+    hostname: lab-node1.example.test
+    token: REPLACE_WITH_TOKEN_FROM_SYLVE_LOGIN
+    expires_at: '2026-11-01T00:00:00Z'
+    verify_ssl: true
+    ca_cert: /etc/ssl/certs/internal-ca.pem
+    default_node: lab-node1.example.test
